@@ -12,9 +12,15 @@ export const guestRegex = /^guest-\d+$/;
 
 export const DUMMY_PASSWORD = generateDummyPassword();
 
+export const GITHUB_REPO_URL =
+  "https://github.com/WilliamStaudenmeier/chatgpt-style-chatbot";
+
+export const SESSION_MESSAGE_LIMIT = 3;
+export const SESSION_MESSAGE_COUNT_KEY = "chat-session-message-count";
+
 export const suggestions = [
   "What is the difference between Machine Learning and AI?",
   "Explain what RAG is in three sentences.",
   "In one sentence, explain what LLM means.",
-  "In two sentences, explain the difference between Cursor and Copilot.",
+  "What is the top AI company in terms of revenue?",
 ];

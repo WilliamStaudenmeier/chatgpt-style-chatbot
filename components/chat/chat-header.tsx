@@ -5,7 +5,8 @@ import Link from "next/link";
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/components/ui/sidebar";
-import { VercelIcon } from "./icons";
+import { GITHUB_REPO_URL } from "@/lib/constants";
+import { GitIcon } from "./icons";
 import { VisibilitySelector, type VisibilityType } from "./visibility-selector";
 
 function PureChatHeader({
@@ -36,11 +37,11 @@ function PureChatHeader({
 
       <Link
         className="flex size-8 items-center justify-center rounded-lg md:hidden"
-        href="https://vercel.com/templates/next.js/chatbot"
+        href={GITHUB_REPO_URL}
         rel="noopener noreferrer"
         target="_blank"
       >
-        <VercelIcon size={14} />
+        <GitIcon />
       </Link>
 
       {!isReadonly && (
@@ -55,12 +56,12 @@ function PureChatHeader({
         className="hidden rounded-lg bg-foreground px-4 text-background hover:bg-foreground/90 md:ml-auto md:flex"
       >
         <Link
-          href="https://vercel.com/templates/next.js/chatbot"
+          href={GITHUB_REPO_URL}
           rel="noopener noreferrer"
           target="_blank"
         >
-          <VercelIcon size={16} />
-          Deploy with Vercel
+          <GitIcon />
+          View on William's GitHub
         </Link>
       </Button>
     </header>

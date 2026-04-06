@@ -9,6 +9,7 @@ import {
   type Dispatch,
   type ReactNode,
   type SetStateAction,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -27,6 +28,11 @@ import type { Vote } from "@/lib/db/schema";
 import { ChatbotError } from "@/lib/errors";
 import type { ChatMessage } from "@/lib/types";
 import { fetcher, fetchWithErrorHandlers, generateUUID } from "@/lib/utils";
+import {
+  GITHUB_REPO_URL,
+  SESSION_MESSAGE_COUNT_KEY,
+  SESSION_MESSAGE_LIMIT,
+} from "@/lib/constants";
 
 type ActiveChatContextValue = {
   chatId: string;
@@ -234,6 +240,42 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
     setMessages,
   });
 
+  const sendMessageWithSessionLimit = useCallback<
+    UseChatHelpers<ChatMessage>["sendMessage"]
+  >(
+    (...args) => {
+      if (typeof window === "undefined") {
+        return sendMessage(...args);
+      }
+
+      const currentCount = Number(
+        window.sessionStorage.getItem(SESSION_MESSAGE_COUNT_KEY) ?? "0"
+      );
+
+      if (currentCount >= SESSION_MESSAGE_LIMIT) {
+        window.location.href = GITHUB_REPO_URL;
+        return Promise.resolve();
+      }
+
+      const nextCount = currentCount + 1;
+      window.sessionStorage.setItem(
+        SESSION_MESSAGE_COUNT_KEY,
+        String(nextCount)
+      );
+
+      const result = sendMessage(...args);
+
+      if (nextCount >= SESSION_MESSAGE_LIMIT) {
+        window.setTimeout(() => {
+          window.location.href = GITHUB_REPO_URL;
+        }, 800);
+      }
+
+      return result;
+    },
+    [sendMessage]
+  );
+
   const isReadonly = isNewChat ? false : (chatData?.isReadonly ?? false);
 
   const { data: votes } = useSWR<Vote[]>(
@@ -249,7 +291,7 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
       chatId,
       messages,
       setMessages,
-      sendMessage,
+      sendMessage: sendMessageWithSessionLimit,
       status,
       stop,
       regenerate,
@@ -269,7 +311,7 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
       chatId,
       messages,
       setMessages,
-      sendMessage,
+      sendMessageWithSessionLimit,
       status,
       stop,
       regenerate,
