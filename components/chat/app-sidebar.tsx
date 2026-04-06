@@ -42,6 +42,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "../ui/alert-dialog";
+import { GITHUB_REPO_URL } from "@/lib/constants";
+import { GitIcon } from "./icons";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export function AppSidebar({ user }: { user: User | undefined }) {
@@ -115,6 +117,22 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                   >
                     <PenSquareIcon className="size-4" />
                     <span className="font-medium">New chat</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    asChild
+                    className="h-8 rounded-lg border border-sidebar-border text-[13px] text-sidebar-foreground/70 transition-colors duration-150 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                    tooltip="See it on William's github"
+                  >
+                    <Link
+                      href={GITHUB_REPO_URL}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      <GitIcon />
+                      <span className="font-medium">See it on William's github</span>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 {user && (
