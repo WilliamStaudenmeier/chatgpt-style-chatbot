@@ -4,7 +4,6 @@ An AI chatbot web app built with Next.js, the Vercel AI SDK, and a Radix-based U
 
 ![B9F7FCF3-637B-4F07-9840-D01D21301EB9_1_201_a](https://github.com/user-attachments/assets/1c92390e-18eb-4e56-9f09-5bb5aad897de)
 
-
 ## What This Project Does
 
 This project provides a ChatGPT-style interface focused on quick AI education use cases.
