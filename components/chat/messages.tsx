@@ -1,12 +1,15 @@
 import type { UseChatHelpers } from "@ai-sdk/react";
 import { ArrowDownIcon } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { useMessages } from "@/hooks/use-messages";
+import { GITHUB_REPO_URL } from "@/lib/constants";
 import type { Vote } from "@/lib/db/schema";
 import type { ChatMessage } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useDataStream } from "./data-stream-provider";
 import { Greeting } from "./greeting";
+import { GitIcon } from "./icons";
 import { PreviewMessage, ThinkingMessage } from "./message";
 
 type MessagesProps = {
@@ -61,6 +64,19 @@ function PureMessages({
 
   return (
     <div className="relative flex-1 bg-background">
+      {messages.length === 0 && !isLoading && (
+        <div className="absolute top-4 right-4 z-20">
+          <Link
+            className="inline-flex items-center gap-2 rounded-xl border border-border/30 bg-card/30 px-3 py-1.5 text-xs text-foreground/85 transition-colors hover:border-border/50 hover:bg-card/50"
+            href={GITHUB_REPO_URL}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <GitIcon />
+            William's Github
+          </Link>
+        </div>
+      )}
       {messages.length === 0 && !isLoading && (
         <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
           <Greeting />

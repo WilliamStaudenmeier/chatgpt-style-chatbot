@@ -5,8 +5,6 @@ import Link from "next/link";
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/components/ui/sidebar";
-import { GITHUB_REPO_URL } from "@/lib/constants";
-import { GitIcon } from "./icons";
 import { VisibilitySelector, type VisibilityType } from "./visibility-selector";
 
 function PureChatHeader({
@@ -35,35 +33,12 @@ function PureChatHeader({
         <PanelLeftIcon className="size-4" />
       </Button>
 
-      <Link
-        className="flex size-8 items-center justify-center rounded-lg md:hidden"
-        href={GITHUB_REPO_URL}
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        <GitIcon />
-      </Link>
-
       {!isReadonly && (
         <VisibilitySelector
           chatId={chatId}
           selectedVisibilityType={selectedVisibilityType}
         />
       )}
-
-      <Button
-        asChild
-        className="hidden rounded-lg bg-foreground px-4 text-background hover:bg-foreground/90 md:ml-auto md:flex"
-      >
-        <Link
-          href={GITHUB_REPO_URL}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <GitIcon />
-          View on William's GitHub
-        </Link>
-      </Button>
     </header>
   );
 }
